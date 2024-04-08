@@ -9,6 +9,7 @@ class HomeController extends Controller
 {
     public function redirect()
     {
+//        dd('hello ');
         if (Auth::check()) {
             if (Auth::user()->userType == 0) {
                 return view('user.home');
@@ -22,6 +23,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('user.home');
+        dd('index');
     }
 }

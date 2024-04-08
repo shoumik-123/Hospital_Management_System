@@ -83,20 +83,12 @@
                         <a class="nav-link" href="contact.html">Contact</a>
                     </li>
 
-
-
-                    @auth
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                Log Out
-                            </button>
-                        </form>
-{{--                        --}}
-{{--                        <x-app-layout>--}}
-{{--                        </x-app-layout>--}}
-                    @endauth
+                    <li class="nav-item">
+                        <a class="btn btn-primary ml-lg-3" href="{{ route('login') }}">Login </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary ml-lg-3" href="{{ route('register') }}">Register</a>
+                    </li>
                 </ul>
 
             </div> <!-- .navbar-collapse -->
