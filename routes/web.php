@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,7 @@ Route::middleware([
 
 });
 Route::get('/home' , [HomeController:: class, 'redirect'])->name('home');
+
+//For Admin
+Route::get('/add_doctor_view' , [AdminController:: class, 'addView'])->name('addView');
+Route::post('/upload_doctor' , [AdminController:: class, 'uploadDoctor'])->name('uploadDoctor');
