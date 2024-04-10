@@ -32,3 +32,6 @@ Route::get('/home' , [HomeController:: class, 'redirect'])->name('home');
 //For Admin
 Route::get('/add_doctor_view' , [AdminController:: class, 'addView'])->name('addView');
 Route::post('/upload_doctor' , [AdminController:: class, 'uploadDoctor'])->name('uploadDoctor');
+
+//For user
+Route::post('appointment' , [HomeController::class, 'appointment'])->name('appointment');
