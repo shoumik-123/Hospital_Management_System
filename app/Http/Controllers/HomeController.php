@@ -39,28 +39,55 @@ class HomeController extends Controller
     //solve  hy  nai
     public function appointment(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'date' => 'required|date',
+            'doctor' => 'required|string',
+            'number' => 'required|string',
+            'message' => 'nullable|string',
+        ]);
+
         $data = new Appiontment;
 
+        if (Auth::check()) {
+            $userId = Auth::id();
 
-        if (Auth::id()){
             $data->name = $request->name;
             $data->email = $request->email;
             $data->date = $request->date;
-            $data->phone = $request->phone;
+            $data->phone = $request->number; // Corrected assignment
             $data->message = $request->message;
             $data->doctor = $request->doctor;
             $data->status = 'In Progress';
-            $data->user_id = Auth::user()->id;
+            $data->user_id = $userId;
 
             $data->save();
-            return redirect()->back()->with('appointment_message', 'Appointment Successfully Done.');
-
+            return redirect()->back()->with('success', 'Appointment Successfully Done.');
+        } else {
+            return redirect()->back()->with('success', 'You have to register first for an Appointment.');
         }
-        else{
-            return redirect()->back()->with('appointment_message', 'You have  to  registration first for Appointment.');
-
-        }
-
-
     }
+
+    public function myAppointment()
+    {
+        if (Auth::check()){
+            $userId = Auth::user()->id;
+            $appoint = Appiontment::where('user_id' , $userId )->get();
+//            return view('user.myAppointment' , compact('appoint'));    //both are  right
+            return view('user.myAppointment' , ['appoint' => $appoint]);
+        }
+
+        else{
+            return redirect()->back();
+        }
+    }
+
+    public function cancelAppointment($id)
+    {
+        $data = Appiontment::find($id);
+        $data -> delete();
+        return redirect()->back()->with('success', 'Appointment Successfully Delete.');
+    }
+
 }

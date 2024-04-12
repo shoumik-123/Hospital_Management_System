@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('doctor')->nullable();
             $table->string('date')->nullable();
             $table->string('message')->nullable();
+            $table->string('status')->default('Pending');
             $table->string('user_id')->nullable();
             $table->timestamps();
         });
