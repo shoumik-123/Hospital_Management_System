@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
 
     <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
-    <title>My Appointment</title>
+    <title>Hospital Management Project</title>
 
     <link rel="stylesheet" href="../assets/css/maicons.css">
 
@@ -84,21 +85,34 @@
 
 
 
-                    @auth
+                    @if(Auth::user())
+                        @auth
 
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-light mr-4" href="{{ route('myAppointment') }}">My Appointment</a>
+                            </li>
+
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Log Out
+                                </button>
+                            </form>
+
+                            {{--                        <x-app-layout>--}}
+                            {{--                        </x-app-layout>--}}
+                        @endauth
+                    @else
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-light mr-4" href="{{ route('myAppointment') }}">My Appointment</a>
+                            <a class="btn btn-primary ml-lg-3" href="{{ route('login') }}">Login </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary ml-lg-3" href="{{ route('register') }}">Register</a>
+                        </li>
+                    @endif
 
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
 
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                Log Out
-                            </button>
-                        </form>
-
-                    @endauth
                 </ul>
 
             </div> <!-- .navbar-collapse -->
@@ -106,43 +120,10 @@
     </nav>
 </header>
 
+@include('user.latestNews')
 
-@if(session('success'))
-    <div id="successAlert" class="alert alert-success">
-        {{ session('success') }}
-        <button id="closeSuccessAlert" type="button" class="close float-end" data-dismiss="alert">
-            X
-        </button>
-    </div>
-@endif
-
-
-<div class="container" style="padding: 45px 0">
-    <table class="table">
-        <tr>
-            <th>Doctor Name</th>
-            <th>Date</th>
-            <th>Message</th>
-            <th>Status</th>
-            <th>Cancel Appointment</th>
-        </tr>
-
-        @foreach($appoint as $appoints)
-
-            <tr>
-                <td>{{$appoints->doctor}}</td>
-                <td>{{$appoints->date}}</td>
-                <td>{{$appoints->message}}</td>
-                <td>{{$appoints->status}}</td>
-                <td>
-                    <a onclick="return confirm('Are you sure to delete this appointment ???')" class="btn btn-outline-danger" href="{{ route('cancelAppointment' , $appoints->id) }}">Cancel</a>
-                </td>
-            </tr>
-        @endforeach
-
-
-    </table>
-</div>
+{{--footer--}}
+@include('user.footer')
 
 
 
@@ -156,15 +137,6 @@
 
 <script src="../assets/js/theme.js"></script>
 
-<script>
-    let successAlert = document.getElementById('successAlert');
-    setTimeout(function(){
-        successAlert.style.display = 'none';
-    }, 3000);
 
-    document.querySelector('#successAlert .close').addEventListener('click', function() {
-        successAlert.style.display = 'none';
-    });
-</script>
 </body>
 </html>

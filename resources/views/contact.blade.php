@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
 
     <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
-    <title>My Appointment</title>
+    <title>Hospital Management Project</title>
 
     <link rel="stylesheet" href="../assets/css/maicons.css">
 
@@ -83,29 +84,40 @@
                     </li>
 
 
+                    @if(Auth::user())
+                        @auth
 
-                    @auth
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-light mr-4" href="{{ route('myAppointment') }}">My Appointment</a>
+                            </li>
 
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Log Out
+                                </button>
+                            </form>
+
+                            {{--                        <x-app-layout>--}}
+                            {{--                        </x-app-layout>--}}
+                        @endauth
+                    @else
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-light mr-4" href="{{ route('myAppointment') }}">My Appointment</a>
+                            <a class="btn btn-primary ml-lg-3" href="{{ route('login') }}">Login </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary ml-lg-3" href="{{ route('register') }}">Register</a>
+                        </li>
+                    @endif
 
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
 
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                Log Out
-                            </button>
-                        </form>
-
-                    @endauth
                 </ul>
 
             </div> <!-- .navbar-collapse -->
         </div> <!-- .container -->
     </nav>
 </header>
-
 
 @if(session('success'))
     <div id="successAlert" class="alert alert-success">
@@ -117,32 +129,56 @@
 @endif
 
 
-<div class="container" style="padding: 45px 0">
-    <table class="table">
-        <tr>
-            <th>Doctor Name</th>
-            <th>Date</th>
-            <th>Message</th>
-            <th>Status</th>
-            <th>Cancel Appointment</th>
-        </tr>
+<div class="page-banner overlay-dark bg-image" style="background-image: url(../assets/img/bg_image_1.jpg);">
+    <div class="banner-section">
+        <div class="container text-center wow fadeInUp">
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                </ol>
+            </nav>
+            <h1 class="font-weight-normal">Contact</h1>
+        </div> <!-- .container -->
+    </div> <!-- .banner-section -->
+</div> <!-- .page-banner -->
 
-        @foreach($appoint as $appoints)
+<div class="page-section">
+    <div class="container">
+        <h1 class="text-center wow fadeInUp">Get in Touch</h1>
 
-            <tr>
-                <td>{{$appoints->doctor}}</td>
-                <td>{{$appoints->date}}</td>
-                <td>{{$appoints->message}}</td>
-                <td>{{$appoints->status}}</td>
-                <td>
-                    <a onclick="return confirm('Are you sure to delete this appointment ???')" class="btn btn-outline-danger" href="{{ route('cancelAppointment' , $appoints->id) }}">Cancel</a>
-                </td>
-            </tr>
-        @endforeach
-
-
-    </table>
+        <form class="contact-form mt-5">
+            <div class="row mb-3">
+                <div class="col-sm-6 py-2 wow fadeInLeft">
+                    <label for="fullName">Name</label>
+                    <input type="text" id="fullName" class="form-control" placeholder="Full name..">
+                </div>
+                <div class="col-sm-6 py-2 wow fadeInRight">
+                    <label for="emailAddress">Email</label>
+                    <input type="text" id="emailAddress" class="form-control" placeholder="Email address..">
+                </div>
+                <div class="col-12 py-2 wow fadeInUp">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" class="form-control" placeholder="Enter subject..">
+                </div>
+                <div class="col-12 py-2 wow fadeInUp">
+                    <label for="message">Message</label>
+                    <textarea id="message" class="form-control" rows="8" placeholder="Enter Message.."></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary wow zoomIn">Send Message</button>
+        </form>
+    </div>
 </div>
+
+<div class="maps-container wow fadeInUp">
+    <div id="google-maps"></div>
+</div>
+
+
+{{--footer--}}
+@include('user.footer')
+
 
 
 
@@ -154,7 +190,11 @@
 
 <script src="../assets/vendor/wow/wow.min.js"></script>
 
+<script src="../assets/js/google-maps.js"></script>
+
 <script src="../assets/js/theme.js"></script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script>
 
 <script>
     let successAlert = document.getElementById('successAlert');
@@ -166,5 +206,6 @@
         successAlert.style.display = 'none';
     });
 </script>
+
 </body>
 </html>

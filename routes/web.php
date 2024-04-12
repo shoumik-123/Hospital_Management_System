@@ -28,6 +28,10 @@ Route::middleware([
 
 });
 Route::get('/home' , [HomeController:: class, 'redirect'])->name('home');
+Route::get('/about-Us' , [HomeController:: class, 'aboutUs'])->name('aboutUs');
+Route::get('/doctor-Page' , [HomeController:: class, 'doctorPage'])->name('doctorPage');
+Route::get('/contactUs' , [HomeController:: class, 'contactUs'])->name('contactUs');
+Route::get('/news' , [HomeController:: class, 'news'])->name('news');
 
 
 
@@ -37,6 +41,10 @@ Route::post('/upload_doctor' , [AdminController:: class, 'uploadDoctor'])->name(
 Route::get('/show_appointments' , [AdminController:: class, 'showAppointments'])->name('showAppointments');
 Route::get('/approved/{id}' , [AdminController:: class, 'approveAppointments'])->name('approveAppointments');
 Route::get('/cancel/{id}' , [AdminController:: class, 'cancelAppointments'])->name('cancelAppointments');
+Route::get('/show-doctor' , [AdminController:: class, 'showDoctor'])->name('showDoctor');
+Route::get('/delete-doctor/{id}' , [AdminController:: class, 'deleteDoctor'])->name('deleteDoctor');
+
+Route::get('/update-doctor/{id}' , [AdminController:: class, 'updateDoctor'])->name('updateDoctor'); //Jhamila ache
 
 
 //For user

@@ -24,7 +24,7 @@
 
     <div class="container-fluid page-body-wrapper">
 
-        <div class="container-fluid p-28" style="box-sizing: border-box">
+        <div class="container-fluid p-28" >
             <table class="table text-light">
                 <tr>
                     <th>Patient Name</th>

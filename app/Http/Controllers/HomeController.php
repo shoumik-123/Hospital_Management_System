@@ -26,17 +26,18 @@ class HomeController extends Controller
 
     public function index()
     {
-        if (Auth::id()){
-            return redirect('home');
-        }
-        else{
-            $doctor = doctor::all();
-            return view('index' , compact('doctor'));
-        }
+//        if (Auth::id()){
+//            return redirect('home');
+//        }
+//        else{
+//            $doctor = doctor::all();
+//            return view('index' , compact('doctor'));
+//        }
+        $doctor = doctor::all();
+        return view('user.home', ['doctor' => $doctor]);
     }
 
 
-    //solve  hy  nai
     public function appointment(Request $request)
     {
         $validatedData = $request->validate([
@@ -88,6 +89,28 @@ class HomeController extends Controller
         $data = Appiontment::find($id);
         $data -> delete();
         return redirect()->back()->with('success', 'Appointment Successfully Delete.');
+    }
+
+
+    public function aboutUs()
+    {
+        $data = Doctor::all();
+        return view('aboutUs' , ['doctor' => $data]);
+    }
+
+
+    public function doctorPage()
+    {
+        $data = Doctor::all();
+        return view('doctorPage' , ['doctor' => $data]);
+    }
+    public function contactUs()
+    {
+        return view('contact' );
+    }
+    public function news()
+    {
+        return view('news' );
     }
 
 }

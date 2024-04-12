@@ -70,37 +70,47 @@
                         <a class="nav-link" href="{{ route('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About Us</a>
+                        <a class="nav-link" href="{{ route('aboutUs') }}">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="doctors.html">Doctors</a>
+                        <a class="nav-link" href="{{ route('doctorPage') }}">Doctors</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="blog.html">News</a>
+                        <a class="nav-link" href="{{ route('news') }}">News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
+                        <a class="nav-link" href="{{ route('contactUs') }}">Contact</a>
                     </li>
 
 
+                    @if(Auth::user())
+                        @auth
 
-                    @auth
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-light mr-4" href="{{ route('myAppointment') }}">My Appointment</a>
+                            </li>
 
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Log Out
+                                </button>
+                            </form>
+
+                            {{--                        <x-app-layout>--}}
+                            {{--                        </x-app-layout>--}}
+                        @endauth
+                    @else
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-light mr-4" href="{{ route('myAppointment') }}">My Appointment</a>
+                            <a class="btn btn-primary ml-lg-3" href="{{ route('login') }}">Login </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary ml-lg-3" href="{{ route('register') }}">Register</a>
+                        </li>
+                    @endif
 
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
 
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                Log Out
-                            </button>
-                        </form>
-
-{{--                        <x-app-layout>--}}
-{{--                        </x-app-layout>--}}
-                    @endauth
                 </ul>
 
             </div> <!-- .navbar-collapse -->
@@ -166,7 +176,7 @@
                 <div class="col-lg-6 py-3 wow fadeInUp">
                     <h1>Welcome to Your Health <br> Center</h1>
                     <p class="text-grey mb-4">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Accusantium aperiam earum ipsa eius, inventore nemo labore eaque porro consequatur ex aspernatur. Explicabo, excepturi accusantium! Placeat voluptates esse ut optio facilis!</p>
-                    <a href="about.html" class="btn btn-primary">Learn More</a>
+                    <a href="{{ route('aboutUs') }}" class="btn btn-primary">Learn More</a>
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
                     <div class="img-place custom-img-1">

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
 
     <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
-    <title>My Appointment</title>
+    <title>Hospital Management Project</title>
 
     <link rel="stylesheet" href="../assets/css/maicons.css">
 
@@ -84,28 +85,40 @@
 
 
 
-                    @auth
+                    @if(Auth::user())
+                        @auth
 
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-light mr-4" href="{{ route('myAppointment') }}">My Appointment</a>
+                            </li>
+
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Log Out
+                                </button>
+                            </form>
+
+                            {{--                        <x-app-layout>--}}
+                            {{--                        </x-app-layout>--}}
+                        @endauth
+                    @else
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-light mr-4" href="{{ route('myAppointment') }}">My Appointment</a>
+                            <a class="btn btn-primary ml-lg-3" href="{{ route('login') }}">Login </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary ml-lg-3" href="{{ route('register') }}">Register</a>
+                        </li>
+                    @endif
 
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
 
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                Log Out
-                            </button>
-                        </form>
-
-                    @endauth
                 </ul>
 
             </div> <!-- .navbar-collapse -->
         </div> <!-- .container -->
     </nav>
 </header>
-
 
 @if(session('success'))
     <div id="successAlert" class="alert alert-success">
@@ -117,32 +130,72 @@
 @endif
 
 
-<div class="container" style="padding: 45px 0">
-    <table class="table">
-        <tr>
-            <th>Doctor Name</th>
-            <th>Date</th>
-            <th>Message</th>
-            <th>Status</th>
-            <th>Cancel Appointment</th>
-        </tr>
+<div class="page-banner overlay-dark bg-image" style="background-image: url(../assets/img/bg_image_1.jpg);">
+    <div class="banner-section">
+        <div class="container text-center wow fadeInUp">
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">About</li>
+                </ol>
+            </nav>
+            <h1 class="font-weight-normal">About Us</h1>
+        </div> <!-- .container -->
+    </div> <!-- .banner-section -->
+</div> <!-- .page-banner -->
 
-        @foreach($appoint as $appoints)
-
-            <tr>
-                <td>{{$appoints->doctor}}</td>
-                <td>{{$appoints->date}}</td>
-                <td>{{$appoints->message}}</td>
-                <td>{{$appoints->status}}</td>
-                <td>
-                    <a onclick="return confirm('Are you sure to delete this appointment ???')" class="btn btn-outline-danger" href="{{ route('cancelAppointment' , $appoints->id) }}">Cancel</a>
-                </td>
-            </tr>
-        @endforeach
-
-
-    </table>
+<div class="page-section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 py-3 wow zoomIn">
+                <div class="card-service">
+                    <div class="circle-shape bg-secondary text-white">
+                        <span class="mai-chatbubbles-outline"></span>
+                    </div>
+                    <p><span>Chat</span> with a doctors</p>
+                </div>
+            </div>
+            <div class="col-md-4 py-3 wow zoomIn">
+                <div class="card-service">
+                    <div class="circle-shape bg-primary text-white">
+                        <span class="mai-shield-checkmark"></span>
+                    </div>
+                    <p><span>One</span>-Health Protection</p>
+                </div>
+            </div>
+            <div class="col-md-4 py-3 wow zoomIn">
+                <div class="card-service">
+                    <div class="circle-shape bg-accent text-white">
+                        <span class="mai-basket"></span>
+                    </div>
+                    <p><span>One</span>-Health Pharmacy</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="page-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 wow fadeInUp">
+                <h1 class="text-center mb-3">Welcome to Your Health Center</h1>
+                <div class="text-lg">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt neque sit, explicabo vero nulla animi nemo quae cumque, eaque pariatur eum ut maxime! Tenetur aperiam maxime iure explicabo aut consequuntur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt neque sit, explicabo vero nulla animi nemo quae cumque, eaque pariatur eum ut maxime! Tenetur aperiam maxime iure explicabo aut consequuntur.</p>
+                    <p>Expedita iusto sunt beatae esse id nihil voluptates magni, excepturi distinctio impedit illo, incidunt iure facilis atque, inventore reprehenderit quidem aliquid recusandae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quod ad sequi atque accusamus deleniti placeat dignissimos illum nulla voluptatibus vel optio, molestiae dolore velit iste maxime, nobis odio molestias!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{{--doctor part--}}
+@include('user.doctor')
+
+{{--footer--}}
+@include('user.footer')
 
 
 
@@ -166,5 +219,6 @@
         successAlert.style.display = 'none';
     });
 </script>
+
 </body>
 </html>
