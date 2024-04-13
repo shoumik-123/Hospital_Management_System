@@ -135,7 +135,7 @@
                 <td>{{$appoints->message}}</td>
                 <td>{{$appoints->status}}</td>
                 <td>
-                    <a onclick="return confirm('Are you sure to delete this appointment ???')" class="btn btn-outline-danger" href="{{ route('cancelAppointment' , $appoints->id) }}">Cancel</a>
+                    <a onclick="return confirm('Are you sure to delete this appointment ???')" class="btn btn-outline-danger" href="{{ route('cancelAppointment' , $appoints->id) }}">Remove</a>
                 </td>
             </tr>
         @endforeach
