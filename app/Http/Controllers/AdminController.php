@@ -81,6 +81,37 @@ class AdminController extends Controller
     }
     public function updateDoctor($id)
     {
-       return view('admin.updateDoctorsProfile');
+        $data = Doctor::find($id);
+       return view('admin.updateDoctorsProfile', ['doctor' => $data]);
     }
+    public function editDoctor(Request $request, $id)
+    {
+        $doctor = Doctor::find($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'number' => 'required|string|max:11',
+            'roomNumber' => 'required|string|max:50',
+            'speciality' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('doctorImages'), $imageName);
+            $doctor->image = $imageName;
+        }
+
+        $doctor->name = $request->name;
+        $doctor->phone = $request->number;
+        $doctor->roomNumber = $request->roomNumber;
+        $doctor->speciality = $request->speciality;
+
+        // Save the doctor's data after all updates
+        $doctor->save();
+
+        return redirect()->back()->with('success', 'Doctor updated successfully.');
+    }
+
 }

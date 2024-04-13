@@ -43,8 +43,8 @@ Route::get('/approved/{id}' , [AdminController:: class, 'approveAppointments'])-
 Route::get('/cancel/{id}' , [AdminController:: class, 'cancelAppointments'])->name('cancelAppointments');
 Route::get('/show-doctor' , [AdminController:: class, 'showDoctor'])->name('showDoctor');
 Route::get('/delete-doctor/{id}' , [AdminController:: class, 'deleteDoctor'])->name('deleteDoctor');
-
-Route::get('/update-doctor/{id}' , [AdminController:: class, 'updateDoctor'])->name('updateDoctor'); //Jhamila ache
+Route::get('/update-doctor/{id}' , [AdminController:: class, 'updateDoctor'])->name('updateDoctor');
+Route::post('/edit-Doctor/{id}' , [AdminController:: class, 'editDoctor'])->name('editDoctor');
 
 
 //For user

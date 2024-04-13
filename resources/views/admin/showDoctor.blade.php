@@ -34,8 +34,7 @@
                     <th>Phone</th>
                     <th>Speciality</th>
                     <th>Room Number</th>
-                    <th>Update</th>
-                    <th>Delete</th>
+                    <th>Actions</th>
                 </tr>
 
                 @foreach($data as $doctor)
@@ -48,9 +47,7 @@
                         <td>{{ $doctor->speciality }}</td>
                         <td>{{ $doctor->roomNumber }}</td>
                         <td>
-                            <a class="btn btn-outline-primary" href="{{ route('updateDoctor' , $doctor->id) }}">Update</a>
-                        </td>
-                        <td>
+                            <a class="btn btn-outline-primary mr-4" href="{{ route('updateDoctor' , $doctor->id) }}">Update</a>
                             <a class="btn btn-outline-danger" href="{{ route('deleteDoctor' , $doctor->id) }}">Delete</a>
                         </td>
 

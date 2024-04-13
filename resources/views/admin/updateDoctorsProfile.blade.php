@@ -17,7 +17,7 @@
 
     <div class="container-fluid page-body-wrapper">
 
-        <div class="container my-20" align="center">
+        <div class="container my-20" align="center" style="height: 70vh ;box-sizing: border-box">
 
 
             @if(session('success'))
@@ -29,41 +29,52 @@
                 </div>
             @endif
 
-            <form class="w-50 text-left" method="POST" action="{{ route('uploadDoctor') }}" enctype="multipart/form-data">
 
-                @csrf
+                <form class="w-75 text-left" method="POST" action="{{ route('editDoctor' , $doctor->id) }}" enctype="multipart/form-data">
+                    @csrf
 
-                <div  class="p-7 w-100">
-                    <label>Doctor Name : </label>
-                    <input class="form-input transform mt-2 w-100 text-black" type="text" name="name" placeholder="Write the name....."  required>
-                </div>
-                <div  class="p-7 w-100">
-                    <label>Number : </label>
-                    <input class="form-input transform mt-2 w-100 text-black" type="number" name="number" placeholder="Phone  Number....." required>
-                </div>
-                <div  class="p-7 w-100">
-                    <label>Speciality : </label>
-                    <select name="speciality" class="text-black" required>
-                        <option>--Select--</option>
-                        <option value="skin">Skin</option>
-                        <option value="heart">Heart</option>
-                        <option value="eye">Eye</option>
-                        <option value="nose">Nose</option>
-                    </select>
-                </div>
-                <div  class="p-7 w-100">
-                    <label>Room Number : </label>
-                    <input class="form-input transform mt-2 w-100 text-black" type="number" name="roomNumber" placeholder="Room Number....." required>
-                </div>
-                <div  class="p-7 w-100">
-                    <label>Doctor Image : </label>
-                    <input class="form-input transform mt-2 w-100 text-black" type="file" name="image" required>
-                </div>
-                <div  class="px-7 w-100">
-                    <input class="btn btn-success transform  py-3 w-100 text-black" type="submit" >
-                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div  class="p-7 w-100">
+                                <label>Doctor Name : </label>
+                                <input class="form-input transform mt-2 w-100 text-black" type="text" name="name" value="{{ $doctor->name }}" placeholder="Write the name....."  required>
+                            </div>
+                            <div  class="p-7 w-100">
+                                <label>Number : </label>
+                                <input class="form-input transform mt-2 w-100 text-black" type="number" name="number" value="{{  $doctor->phone }}" placeholder="Phone  Number....." required>
+                            </div>
+                            <div  class="p-7 w-100">
+                                <label>Speciality : </label>
+                                <select name="speciality" class="text-black" required>
+                                    <option value="skin" <?php echo ($doctor->speciality == "skin") ? "selected" : ""; ?>>Skin</option>
+                                    <option value="heart" <?php echo ($doctor->speciality == "heart") ? "selected" : ""; ?>>Heart</option>
+                                    <option value="eye" <?php echo ($doctor->speciality == "eye") ? "selected" : ""; ?>>Eye</option>
+                                    <option value="nose" <?php echo ($doctor->speciality == "nose") ? "selected" : ""; ?>>Nose</option>
+                                </select>
 
-            </form>
+                            </div>
+                            <div  class="p-7 w-100">
+                                <label>Room Number : </label>
+                                <input class="form-input transform mt-2 w-100 text-black" type="number" name="roomNumber" value="{{ $doctor->roomNumber }}" placeholder="Room Number....." required>
+                            </div>
+                            <div  class="p-7 w-100">
+                                <label>Change Photo : </label>
+                                <input class="form-input transform mt-2 w-100 text-black" type="file" name="image">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div  class="p-7 w-100">
+                                <label>Doctor Image : </label>
+                                <img src="{{ asset('doctorImages/' . $doctor->image) }}"  alt="" style="height: 500px ;  width: 100%"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div  class="px-7 w-100">
+                        <input class="btn btn-success transform  py-3 w-100 text-black" type="submit" >
+                    </div>
+
+                </form>
 
         </div>
 

@@ -34,8 +34,7 @@
                     <th>Date</th>
                     <th>Message</th>
                     <th>Status</th>
-                    <th>Approve</th>
-                    <th>Cancel</th>
+                    <th>Action</th>
                 </tr>
 
                 @foreach($data as $appoint)
@@ -49,21 +48,30 @@
                             {{ Str::limit($appoint->message, 40) }} <!-- Display a truncated message -->
                         </td>
 
-                        <td>{{ $appoint->status }}</td>
                         <td>
                             @if($appoint->status == "Approved")
-                                <a class="btn btn-success">Approved</a>
+                                <span class="badge badge-success">{{ $appoint->status }}</span>
 
+                            @elseif($appoint->status == "Canceled")
+                                <span class="badge badge-danger">{{ $appoint->status }}</span>
                             @else
-                                <a class="btn btn-outline-success" href="{{ route('approveAppointments', $appoint->id) }}">Approved</a>
+                                <span class="badge badge-primary">{{ $appoint->status }}</span>
+
                             @endif
                         </td>
+{{--                        <td>{{ $appoint->status }}</td>--}}
                         <td>
-                            @if($appoint->status == "Canceled")
-                                <a class="btn btn-danger">Cancel</a>
+                            @if($appoint->status == "Approved")
+                                <a class="btn btn-outline-danger" href="{{ route('cancelAppointments', $appoint->id) }}">Cancel</a>
+
+                            @elseif($appoint->status == "Canceled")
+                                <a class="btn btn-outline-success" href="{{ route('approveAppointments', $appoint->id) }}">Approve</a>
                             @else
+                                <a class="btn btn-outline-success" href="{{ route('approveAppointments', $appoint->id) }}">Approve</a>
                                 <a class="btn btn-outline-danger" href="{{ route('cancelAppointments', $appoint->id) }}">Cancel</a>
                             @endif
+
+
                         </td>
 
                     </tr>
